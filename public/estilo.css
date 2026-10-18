@@ -1,0 +1,428 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --noche: #0b0210;
+  --panel: #1a0a24;
+  --rosa: #ff2d95;
+  --rosa-claro: #ffc2e0;
+  --rojo: #e11d48;
+  --dorado: #ffcf5a;
+  --suave: #d9a6c4;
+}
+
+body {
+  font-family: "Rajdhani", "Segoe UI", Arial, sans-serif;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(255, 45, 149, 0.35), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(120, 60, 255, 0.25), transparent 40%),
+    #0b0210;
+}
+
+header,
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Petalos de sakura cayendo ---------- */
+.petalos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.petalos span {
+  position: absolute;
+  top: -20px;
+  width: 12px;
+  height: 12px;
+  background: #ffc2e0;
+  border-radius: 150% 0 150% 0;
+  opacity: 0.7;
+  animation: caer 12s linear infinite;
+}
+
+.petalos span:nth-child(1) { left: 6%; animation-delay: 0s; }
+.petalos span:nth-child(2) { left: 18%; animation-delay: 3s; animation-duration: 14s; }
+.petalos span:nth-child(3) { left: 30%; animation-delay: 6s; }
+.petalos span:nth-child(4) { left: 44%; animation-delay: 1.5s; animation-duration: 15s; }
+.petalos span:nth-child(5) { left: 58%; animation-delay: 8s; }
+.petalos span:nth-child(6) { left: 70%; animation-delay: 4s; animation-duration: 13s; }
+.petalos span:nth-child(7) { left: 82%; animation-delay: 9s; }
+.petalos span:nth-child(8) { left: 93%; animation-delay: 2s; animation-duration: 16s; }
+
+@keyframes caer {
+  to {
+    transform: translate(70px, 110vh) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petalos span {
+    animation: none;
+  }
+}
+
+/* ---------- Encabezado ---------- */
+header {
+  text-align: center;
+  padding: 64px 20px 34px;
+  overflow: hidden;
+}
+
+/* Bandera de cuadros de carreras */
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-image: conic-gradient(#ffffff 25%, #000000 25% 50%, #ffffff 50% 75%, #000000 75%);
+  background-size: 24px 24px;
+  opacity: 0.9;
+}
+
+.kanji {
+  position: absolute;
+  top: 10px;
+  right: 5%;
+  font-family: "Noto Serif JP", serif;
+  font-size: 12rem;
+  color: rgba(255, 45, 149, 0.14);
+  line-height: 1;
+  user-select: none;
+}
+
+.etiqueta {
+  position: relative;
+  letter-spacing: 6px;
+  color: #d9a6c4;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+header h1 {
+  position: relative;
+  font-family: "Orbitron", "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 7vw, 4.2rem);
+  text-transform: uppercase;
+  margin: 10px 0 4px;
+  color: #ff2d95;
+  text-shadow:
+    0 0 8px rgba(255, 45, 149, 0.95),
+    0 0 26px rgba(255, 45, 149, 0.7),
+    0 0 52px rgba(225, 29, 72, 0.6);
+}
+
+.sub {
+  position: relative;
+  font-family: "Noto Serif JP", serif;
+  color: #ffc2e0;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+}
+
+/* Raya de velocidad */
+.raya {
+  position: relative;
+  height: 10px;
+  margin: 0 auto 26px;
+  max-width: 900px;
+  background: repeating-linear-gradient(-45deg, #ff2d95 0, #ff2d95 18px, transparent 18px, transparent 32px);
+  box-shadow: 0 0 22px rgba(255, 45, 149, 0.7);
+}
+
+nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffc2e0;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 22px;
+  border: 2px solid #ff2d95;
+  border-radius: 6px;
+  transform: skewX(-12deg);
+  transition: all 0.2s;
+}
+
+nav a:hover,
+nav a:focus-visible {
+  background: #ff2d95;
+  color: #ffffff;
+  box-shadow: 0 0 20px #ff2d95;
+  outline: none;
+}
+
+/* ---------- Contenido ---------- */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 20px 50px;
+}
+
+h2 {
+  font-family: "Orbitron", sans-serif;
+  text-align: center;
+  color: #ffcf5a;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 28px;
+  text-shadow: 0 0 14px rgba(255, 207, 90, 0.5);
+}
+
+.bienvenida,
+.detalle {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(160deg, #240d33, #1a0a24);
+  border: 2px solid #ff2d95;
+  border-radius: 10px;
+  padding: 40px 30px;
+  box-shadow: 0 0 30px rgba(255, 45, 149, 0.35);
+}
+
+.bienvenida p {
+  line-height: 1.7;
+  margin-bottom: 24px;
+  color: #ffc2e0;
+  font-size: 1.15rem;
+}
+
+.chips {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.chips span {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  border: 1px solid #ffcf5a;
+  color: #ffcf5a;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.boton {
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(90deg, #ff2d95, #e11d48);
+  padding: 13px 34px;
+  border-radius: 6px;
+  transform: skewX(-12deg);
+  box-shadow: 0 0 22px rgba(255, 45, 149, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.boton:hover,
+.boton:focus-visible {
+  transform: skewX(-12deg) scale(1.06);
+  box-shadow: 0 0 36px #ff2d95;
+  outline: none;
+}
+
+/* ---------- Tarjetas ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 26px;
+}
+
+.tarjeta {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(160deg, #240d33, #1a0a24);
+  border: 1px solid #5a2a73;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.tarjeta::after {
+  content: "速";
+  position: absolute;
+  right: 12px;
+  bottom: -6px;
+  font-family: "Noto Serif JP", serif;
+  font-size: 5rem;
+  color: rgba(255, 45, 149, 0.13);
+}
+
+.tarjeta:hover,
+.tarjeta:focus-visible {
+  transform: translateY(-8px) skewY(-1deg);
+  border-color: #ff2d95;
+  box-shadow: 0 0 30px rgba(255, 45, 149, 0.55);
+  outline: none;
+}
+
+.barra {
+  height: 8px;
+}
+
+.cuerpo {
+  padding: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.placa {
+  display: inline-block;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.72rem;
+  background: #f5f5f5;
+  color: #111111;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 2px solid #111111;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.marca {
+  color: #ff2d95;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.modelo {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.45rem;
+  margin: 4px 0 12px;
+}
+
+.dato {
+  color: #d9a6c4;
+  font-size: 1.1rem;
+  margin-bottom: 3px;
+}
+
+.dato b {
+  color: #ffffff;
+}
+
+.precio {
+  margin-top: 16px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.3rem;
+  color: #ffcf5a;
+  text-shadow: 0 0 12px rgba(255, 207, 90, 0.5);
+}
+
+/* ---------- Detalle ---------- */
+.detalle {
+  padding: 0 0 36px;
+  overflow: hidden;
+}
+
+.detalle .barra {
+  height: 12px;
+  margin-bottom: 30px;
+}
+
+.detalle .modelo {
+  font-size: 2.1rem;
+}
+
+.detalle .boton {
+  margin-top: 26px;
+}
+
+/* ---------- Pie ---------- */
+footer {
+  text-align: center;
+  padding: 22px;
+  color: #ffc2e0;
+  border-top: 2px solid #ff2d95;
+  box-shadow: 0 -4px 24px rgba(255, 45, 149, 0.25);
+  background: rgba(11, 2, 16, 0.85);
+}
+
+/* ---------- Pagina de datos ---------- */
+.caja-tabla {
+  overflow-x: auto;
+  margin-bottom: 40px;
+  border: 2px solid #ff2d95;
+  border-radius: 10px;
+  background: linear-gradient(160deg, #240d33, #1a0a24);
+  box-shadow: 0 0 30px rgba(255, 45, 149, 0.3);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.1rem;
+}
+
+th {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #ffcf5a;
+  background: rgba(255, 45, 149, 0.18);
+  padding: 14px 16px;
+}
+
+td {
+  padding: 12px 16px;
+  color: #ffc2e0;
+  border-top: 1px solid #5a2a73;
+}
+
+tbody tr:hover td {
+  background: rgba(255, 45, 149, 0.12);
+  color: #ffffff;
+}
+
+pre.json {
+  overflow-x: auto;
+  padding: 22px;
+  margin-bottom: 26px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #ffc2e0;
+  background: #12041b;
+  border: 2px solid #ff2d95;
+  border-left-width: 8px;
+  border-radius: 10px;
+}
+
+.centro {
+  text-align: center;
+}
