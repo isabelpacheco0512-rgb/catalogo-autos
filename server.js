@@ -38,20 +38,14 @@ function pagina(titulo, contenido) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${titulo} | Catálogo de Autos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/estilo.css">
 </head>
 <body>
-  <div class="petalos">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
+  <div class="banda"></div>
   <header>
-    <div class="kanji">車</div>
-    <div class="etiqueta">TOKYO NIGHTS • STREET CULTURE</div>
     <h1>Catálogo de Autos</h1>
     <p class="sub">🌸 自動車カタログ 🌸</p>
-    <div class="raya"></div>
     <nav>
       <a href="/">Inicio</a>
       <a href="/autos">Catálogo</a>
@@ -59,7 +53,7 @@ function pagina(titulo, contenido) {
     </nav>
   </header>
   <main>${contenido}</main>
-  <footer>🏁 Microservicio web con Node.js y Express 🏁</footer>
+  <footer>Microservicio web con Node.js y Express</footer>
 </body>
 </html>`;
 }
@@ -68,7 +62,7 @@ function tarjeta(auto) {
   const color = colores[auto.color] || "#999999";
   return `
     <a class="tarjeta" href="/autos/${auto.id}">
-      <div class="barra" style="background:${color}; box-shadow:0 0 18px ${color}"></div>
+      <div class="barra" style="background:${color}"></div>
       <div class="cuerpo">
         <div class="placa">JDM-0${auto.id}</div>
         <div class="marca">${auto.marca}</div>
@@ -87,11 +81,6 @@ app.get("/", (req, res) => {
   res.send(pagina("Inicio", `
     <section class="bienvenida">
       <h2>Bienvenido</h2>
-      <div class="chips">
-        <span>${autos.length} AUTOS</span>
-        <span>API JSON</span>
-        <span>NODE + EXPRESS</span>
-      </div>
       <p>Este microservicio web entrega un catálogo básico de autos con su
       marca, modelo, año, precio y color. Explora el catálogo o consulta
       los datos en formato JSON.</p>
@@ -120,7 +109,7 @@ app.get("/autos/:id", (req, res) => {
   const color = colores[auto.color] || "#999999";
   res.send(pagina(auto.modelo, `
     <section class="detalle">
-      <div class="barra" style="background:${color}; box-shadow:0 0 22px ${color}"></div>
+      <div class="barra" style="background:${color}"></div>
       <div class="placa">JDM-0${auto.id}</div>
       <div class="marca">${auto.marca}</div>
       <div class="modelo">${auto.modelo}</div>
