@@ -1,6 +1,26 @@
 const express = require("express");
 const app = express();
 
+// Seguridad básica: oculta que se usa Express y agrega cabeceras protectoras
+app.disable("x-powered-by");
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  next();
+});
+
+// La API es de solo lectura: cualquier método distinto de GET se rechaza
+app.use("/api", (req, res, next) => {
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
+    return res.status(405).json({
+      mensaje: "Método no permitido. Esta API es de solo lectura (GET)."
+    });
+  }
+  next();
+});
+
 // Archivos de diseño (carpeta public).
 // index:false evita que un index.html viejo tape la página de inicio.
 app.use(express.static("public", { index: false }));
@@ -172,15 +192,24 @@ app.get("/api/autos", (req, res) => {
 });
 
 app.get("/api/autos/:id", (req, res) => {
-  const auto = autos.find((a) => a.id === parseInt(req.params.id));
+  // Validación: el id debe ser un número entero positivo
+  if (!/^[1-9]\d*$/.test(req.params.id)) {
+    return res.status(400).json({
+      mensaje: "El id debe ser un número entero positivo"
+    });
+  }
+  const auto = autos.find((a) => a.id === Number(req.params.id));
   if (!auto) {
     return res.status(404).json({ mensaje: "Auto no encontrado" });
   }
   res.json(auto);
 });
 
-// Cualquier otra dirección: página 404 con el mismo diseño
+// Cualquier otra dirección: 404 (JSON para la API, página con diseño para el resto)
 app.use((req, res) => {
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ mensaje: "Ruta no encontrada" });
+  }
   res.status(404).send(pagina("No encontrado", `
     <section class="bienvenida">
       <h2>Página no encontrada</h2>
@@ -188,8 +217,27 @@ app.use((req, res) => {
     </section>`));
 });
 
+// Manejador general de errores inesperados (500)
+app.use((err, req, res, next) => {
+  console.error(err);
+  if (req.path.startsWith("/api")) {
+    return res.status(500).json({ mensaje: "Error interno del servidor" });
+  }
+  res.status(500).send(pagina("Error", `
+    <section class="bienvenida">
+      <h2>Algo salió mal</h2>
+      <p>Ocurrió un error inesperado. Intenta de nuevo más tarde.</p>
+      <a class="boton" href="/">Ir al inicio</a>
+    </section>`));
+});
+
 // Render nos asigna el puerto; si no, usamos el 3000
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Servicio activo en el puerto " + PORT);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log("Servicio activo en el puerto " + PORT);
+  });
+}
+
+// Se exporta la app para poder probarla de forma automática
+module.exports = app;
